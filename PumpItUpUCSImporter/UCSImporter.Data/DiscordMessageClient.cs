@@ -1,4 +1,5 @@
-﻿using Discord;
+﻿using System.Collections.Immutable;
+using Discord;
 using Discord.WebSocket;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -20,7 +21,7 @@ public sealed class DiscordMessageClient : IMessageClient
         _config = discordConfiguration.Value;
     }
 
-    public async Task SendMessage(Message message, CancellationToken cancellationToken = default)
+    public async Task SendMessages(IEnumerable<Message> messages, CancellationToken cancellationToken = default)
     {
         var client = new DiscordSocketClient(new DiscordSocketConfig
         {
@@ -33,7 +34,7 @@ public sealed class DiscordMessageClient : IMessageClient
         };
         await client.LoginAsync(TokenType.Bot, _config.BotToken);
         await client.StartAsync();
-
+        var messageArray = messages.ToImmutableArray();
         foreach (var channelId in _config.ChannelIds)
         {
             var channel = await client.GetChannelAsync(channelId) as IMessageChannel;
@@ -43,7 +44,8 @@ public sealed class DiscordMessageClient : IMessageClient
                 continue;
             }
 
-            await channel.SendMessageAsync(message);
+            foreach (var message in messageArray)
+                await channel.SendMessageAsync(message);
         }
 
         await client.StopAsync();

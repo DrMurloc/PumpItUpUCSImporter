@@ -13,9 +13,10 @@ public sealed class LoggingMessageClient : IMessageClient
         _logger = logger;
     }
 
-    public Task SendMessage(Message message, CancellationToken cancellationToken = default)
+    public Task SendMessages(IEnumerable<Message> messages, CancellationToken cancellationToken = default)
     {
-        _logger.LogInformation(message);
+        foreach (var message in messages)
+            _logger.LogInformation(message);
         return Task.CompletedTask;
     }
 }

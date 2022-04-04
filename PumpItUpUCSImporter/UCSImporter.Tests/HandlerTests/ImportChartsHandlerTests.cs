@@ -158,7 +158,7 @@ public sealed class ImportChartsHandlerTests
     }
 
     [Fact]
-    public async Task ImportChartsStopsAfter100Charts()
+    public async Task ImportChartsStopsAfter30Charts()
     {
         //Test Data
         var chart = _fixture.Create<Chart>();
@@ -177,12 +177,12 @@ public sealed class ImportChartsHandlerTests
         await handler.Handle(new ImportChartsCommand(), CancellationToken.None);
 
         //Assert
-        A.CallTo(() => mediator.Publish(A<ChartsImportedEvent>.That.Matches(e => e.Charts.Count() == 100),
+        A.CallTo(() => mediator.Publish(A<ChartsImportedEvent>.That.Matches(e => e.Charts.Count() == 30),
                 A<CancellationToken>.Ignored))
             .MustHaveHappenedOnceExactly();
 
         A.CallTo(() =>
-                existingChartRepository.AddCharts(A<IEnumerable<Chart>>.That.Matches(c => c.Count() == 100),
+                existingChartRepository.AddCharts(A<IEnumerable<Chart>>.That.Matches(c => c.Count() == 30),
                     A<CancellationToken>.Ignored))
             .MustHaveHappenedOnceExactly();
     }

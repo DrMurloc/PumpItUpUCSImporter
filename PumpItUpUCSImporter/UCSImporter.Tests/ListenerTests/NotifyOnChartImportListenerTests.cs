@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoFixture;
 using FakeItEasy;
@@ -23,16 +25,19 @@ public sealed class NotifyOnChartImportListenerTests
         var chart = _fixture.Create<Chart>();
         var chart2 = _fixture.Create<Chart>();
 
-        var expected = $@"
+        var expected = new[]
+        {
+            $@"
 Chart: {chart.Song.Name} {chart.Type} {chart.Level}
 Artist: {chart.Artist.Name}
 Created on: {chart.CreationDate}
-https://piugame.com/bbs/board.php?bo_table=ucs&wr_id={chart.Id}
-
+https://piugame.com/bbs/board.php?bo_table=ucs&wr_id={chart.Id}",
+            $@"
 Chart: {chart2.Song.Name} {chart2.Type} {chart2.Level}
 Artist: {chart2.Artist.Name}
 Created on: {chart2.CreationDate}
-https://piugame.com/bbs/board.php?bo_table=ucs&wr_id={chart2.Id}";
+https://piugame.com/bbs/board.php?bo_table=ucs&wr_id={chart2.Id}"
+        };
 
         //Set Up
         var client = A.Fake<IMessageClient>();
@@ -44,7 +49,9 @@ https://piugame.com/bbs/board.php?bo_table=ucs&wr_id={chart2.Id}";
         await listener.Handle(new ChartsImportedEvent(new[] { chart, chart2 }), CancellationToken.None);
 
         //Assert
-        A.CallTo(() => client.SendMessage(A<Message>.That.Matches(m => m == expected), A<CancellationToken>.Ignored))
+        A.CallTo(() =>
+                client.SendMessages(A<IEnumerable<Message>>.That.Matches(m => expected.All(e => m.Contains(e))),
+                    A<CancellationToken>.Ignored))
             .MustHaveHappenedOnceExactly();
     }
 }

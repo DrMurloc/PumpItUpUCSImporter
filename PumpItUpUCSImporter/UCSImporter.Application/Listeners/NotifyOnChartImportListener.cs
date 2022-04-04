@@ -2,6 +2,7 @@
 using UCSImporter.Application.Events;
 using UCSImporter.Domain.Contracts;
 using UCSImporter.Domain.Models;
+using UCSImporter.Domain.ValueTypes;
 
 namespace UCSImporter.Application.Listeners;
 
@@ -16,11 +17,10 @@ public sealed class NotifyOnChartImportListener : INotificationHandler<ChartsImp
 
     public async Task Handle(ChartsImportedEvent notification, CancellationToken cancellationToken)
     {
-        var message = string.Join("\n\n", notification.Charts.Select(GetChartDescription));
-        await _messageClient.SendMessage(message, cancellationToken);
+        await _messageClient.SendMessages(notification.Charts.Select(GetChartDescription), cancellationToken);
     }
 
-    private string GetChartDescription(Chart chart)
+    private Message GetChartDescription(Chart chart)
     {
         return $@"Chart: {chart.Song.Name} {chart.Type} {chart.Level}
 Artist: {chart.Artist.Name}

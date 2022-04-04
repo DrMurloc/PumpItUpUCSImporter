@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using FakeItEasy;
+using Microsoft.Extensions.Logging;
 using UCSImporter.Data;
 using UCSImporter.Data.Apis.Contracts;
 using UCSImporter.Domain.Enums;
@@ -23,7 +24,7 @@ public sealed class AndamiroNewChartsRepositoryTests
         A.CallTo(() => client.GetUcsPage(A<int>.Ignored, A<CancellationToken>.Ignored))
             .Returns(pageResult);
 
-        var repository = new AndamiroNewChartRepository(client);
+        var repository = new AndamiroNewChartRepository(client, A.Fake<ILogger<AndamiroNewChartRepository>>());
 
         //Test
         var result = (await repository.GetNewCharts(1)).ToArray();
