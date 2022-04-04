@@ -16,12 +16,15 @@ public sealed class NotifyOnChartImportListener : INotificationHandler<ChartsImp
 
     public async Task Handle(ChartsImportedEvent notification, CancellationToken cancellationToken)
     {
-        var message = string.Join("\n", notification.Charts.Select(GetChartDescription));
+        var message = string.Join("\n\n", notification.Charts.Select(GetChartDescription));
         await _messageClient.SendMessage(message, cancellationToken);
     }
 
     private string GetChartDescription(Chart chart)
     {
-        return $@"{chart.Song.Name}: {chart.Type} {chart.Level} by {chart.Artist.Name} created on {chart.CreationDate}";
+        return $@"Chart: {chart.Song.Name} {chart.Type} {chart.Level}
+Artist: {chart.Artist.Name}
+Created on: {chart.CreationDate}
+https://piugame.com/bbs/board.php?bo_table=ucs&wr_id={chart.Id}";
     }
 }

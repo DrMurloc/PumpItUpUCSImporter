@@ -24,8 +24,15 @@ public sealed class NotifyOnChartImportListenerTests
         var chart2 = _fixture.Create<Chart>();
 
         var expected = $@"
-{chart.Song.Name}: {chart.Type} {chart.Level} by {chart.Artist.Name} created on {chart.CreationDate}
-{chart2.Song.Name}: {chart2.Type} {chart2.Level} by {chart2.Artist.Name} created on {chart2.CreationDate}";
+Chart: {chart.Song.Name} {chart.Type} {chart.Level}
+Artist: {chart.Artist.Name}
+Created on: {chart.CreationDate}
+https://piugame.com/bbs/board.php?bo_table=ucs&wr_id={chart.Id}
+
+Chart: {chart2.Song.Name} {chart2.Type} {chart2.Level}
+Artist: {chart2.Artist.Name}
+Created on: {chart2.CreationDate}
+https://piugame.com/bbs/board.php?bo_table=ucs&wr_id={chart2.Id}";
 
         //Set Up
         var client = A.Fake<IMessageClient>();

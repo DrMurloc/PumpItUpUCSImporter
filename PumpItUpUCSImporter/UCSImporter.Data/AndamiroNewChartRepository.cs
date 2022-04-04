@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Logging;
 using UCSImporter.Data.Apis.Contracts;
 using UCSImporter.Domain.Contracts;
 using UCSImporter.Domain.Enums;
@@ -33,12 +34,15 @@ public sealed class AndamiroNewChartRepository : INewChartRepository
     private static readonly Regex UploadDateRegex = new(@"<td class=""share_upload_date"">(.*?)<\/td>",
         RegexOptions.Compiled | RegexOptions.Singleline);
 
+    private readonly ILogger _logger;
+
 
     private readonly IPiuGameSiteApi _piuGameSiteApi;
 
-    public AndamiroNewChartRepository(IPiuGameSiteApi piuGameSiteApi)
+    public AndamiroNewChartRepository(IPiuGameSiteApi piuGameSiteApi, ILogger<AndamiroNewChartRepository> logger)
     {
         _piuGameSiteApi = piuGameSiteApi;
+        _logger = logger;
     }
 
     public async Task<IEnumerable<Chart>> GetNewCharts(int page, CancellationToken cancellationToken = default)
@@ -48,7 +52,7 @@ public sealed class AndamiroNewChartRepository : INewChartRepository
         return ParseCharts(chartLines.Skip(1).Select(r => r.Value)).ToImmutableArray();
     }
 
-    private static IEnumerable<Chart> ParseCharts(IEnumerable<string> chartLines)
+    private IEnumerable<Chart> ParseCharts(IEnumerable<string> chartLines)
     {
         foreach (var chartLine in chartLines)
         {
@@ -59,6 +63,7 @@ public sealed class AndamiroNewChartRepository : INewChartRepository
             }
             catch (Exception)
             {
+                _logger.LogWarning("Failed to import a chart");
                 continue;
             }
 
