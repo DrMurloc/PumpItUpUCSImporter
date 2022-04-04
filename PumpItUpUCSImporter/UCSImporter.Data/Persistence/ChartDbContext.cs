@@ -14,7 +14,7 @@ public sealed class ChartDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<ChartEntity>().ToContainer("Chart")
-            .HasPartitionKey(c => c.ChartId)
+            .HasPartitionKey(c => c.SongName)
             .HasNoDiscriminator();
     }
 }
