@@ -4,5 +4,5 @@ namespace UCSImporter.Domain.Contracts;
 
 public interface IMessageClient
 {
-    Task SendMessage(Message message, CancellationToken cancellationToken = default);
+    Task SendMessages(IEnumerable<Message> message, CancellationToken cancellationToken = default);
 }

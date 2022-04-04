@@ -40,7 +40,7 @@ public sealed class ImportChartsHandler : IRequestHandler<ImportChartsCommand>
                 .ToImmutableArray();
 
             newCharts.AddRange(charts.Where(c => !existingCharts.Contains(c)));
-        } while (checkedChartCount < 100);
+        } while (checkedChartCount < 30);
 
         if (!newCharts.Any()) return Unit.Value;
         await _existingCharts.AddCharts(newCharts, cancellationToken);
