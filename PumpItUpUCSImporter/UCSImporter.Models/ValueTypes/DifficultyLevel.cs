@@ -50,7 +50,16 @@ public readonly struct DifficultyLevel
         }
     }
 
-    public static bool TryParse(int levelInt, out DifficultyLevel? result)
+
+    public static bool TryParse(string levelString, out DifficultyLevel result)
+    {
+        if (!int.TryParse(levelString, out var levelInt))
+            throw new InvalidChartIdException($"{levelString} is not a valid number");
+
+        return TryParse(levelInt, out result);
+    }
+
+    public static bool TryParse(int levelInt, out DifficultyLevel result)
     {
         try
         {

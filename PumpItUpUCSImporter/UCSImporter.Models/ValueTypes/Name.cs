@@ -47,7 +47,7 @@ public readonly struct Name
         }
     }
 
-    public static bool TryParse(string nameString, out Name? result)
+    public static bool TryParse(string nameString, out Name result)
     {
         try
         {
@@ -56,7 +56,7 @@ public readonly struct Name
         }
         catch
         {
-            result = default;
+            result = new Name("Invalid");
             return false;
         }
     }

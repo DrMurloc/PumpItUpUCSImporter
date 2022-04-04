@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UCSImporter.Application\UCSImporter.Application.csproj" />
+    <ProjectReference Include="..\UCSImporter.Data\UCSImporter.Data.csproj" />
   </ItemGroup>
 
 </Project>

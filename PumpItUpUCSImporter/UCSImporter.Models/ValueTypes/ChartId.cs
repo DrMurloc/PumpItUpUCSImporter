@@ -47,7 +47,7 @@ public class ChartId
         }
     }
 
-    public static bool TryParse(int idInt, out ChartId? result)
+    public static bool TryParse(int idInt, out ChartId result)
     {
         try
         {
@@ -56,11 +56,18 @@ public class ChartId
         }
         catch
         {
-            result = default;
+            result = From(1);
             return false;
         }
     }
 
+    public static bool TryParse(string idString, out ChartId result)
+    {
+        if (!int.TryParse(idString, out var idInt))
+            throw new InvalidChartIdException($"{idString} is not a valid number");
+
+        return TryParse(idInt, out result);
+    }
 
     private bool Equals(ChartId otherParam)
     {
