@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using UCSImporter.Domain.Contracts;
-using UCSImporter.Domain.ValueTypes;
+using UCSImporter.Domain.Models;
 
 namespace UCSImporter.Data.InMemory;
 
@@ -13,10 +13,9 @@ public sealed class LoggingMessageClient : IMessageClient
         _logger = logger;
     }
 
-    public Task SendMessages(IEnumerable<Message> messages, CancellationToken cancellationToken = default)
+    public Task NotifyChartsImported(IEnumerable<Chart> charts, CancellationToken cancellationToken)
     {
-        foreach (var message in messages)
-            _logger.LogInformation(message);
+        foreach (var chart in charts) _logger.LogInformation($"Imported {chart.Id}");
         return Task.CompletedTask;
     }
 }
