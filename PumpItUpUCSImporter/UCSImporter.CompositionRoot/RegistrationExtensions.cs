@@ -36,6 +36,8 @@ public static class RegistrationExtensions
 
 
         if (piuConfiguration.IsConfigured)
+        {
+            builder.AddHttpClient<IPiuGameSiteApi, PiuGameSiteApi>(o => { });
             builder
                 .AddTransient<IChartStepInfoRepository, AndamiroChartStepInfoRepository>()
                 .AddTransient<INewChartRepository, AndamiroNewChartRepository>()
@@ -45,8 +47,11 @@ public static class RegistrationExtensions
                     o.Email = piuConfiguration.Email;
                     o.Password = piuConfiguration.Password;
                 });
+        }
         else
+        {
             builder.AddTransient<INewChartRepository, InMemoryNewChartRepository>();
+        }
 
         builder.AddTransient<IExistingChartRepository, CosmosExistingChartsRepository>()
             .AddTransient<IMessageClient, DiscordMessageClient>()
@@ -57,10 +62,6 @@ public static class RegistrationExtensions
                     o.UseInMemoryDatabase("Cosmos");
                 else
                     o.UseCosmos(cosmosConfig.AccountEndpoint, cosmosConfig.AccountKey, cosmosConfig.DatabaseName);
-            })
-            .AddHttpClient<IPiuGameSiteApi, PiuGameSiteApi>(o =>
-            {
-                o.BaseAddress = new Uri("https://www.piugame.com");
             });
 
         return builder;

@@ -14,6 +14,7 @@ public sealed class PiuGameSiteApi : IPiuGameSiteApi
     {
         _httpClient = httpClient;
         _config = options.Value;
+        _httpClient.BaseAddress = new Uri("https://www.piugame.com");
     }
 
     public async Task<string> GetUcsPage(int page, CancellationToken cancellationToken = default)

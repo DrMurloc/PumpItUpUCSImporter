@@ -37,7 +37,7 @@ public sealed class AndamiroNewChartsRepositoryTests
         Assert.Equal("4/4/2022", chart.CreationDate.ToString());
         Assert.Equal("HAALL", chart.Artist.Name);
         Assert.Equal(ChartType.Double, chart.Type);
-        Assert.Equal(10599, (int)chart.Id);
+        Assert.Equal(27228, (int)chart.Id);
 
         chart = result[1];
 
@@ -45,7 +45,7 @@ public sealed class AndamiroNewChartsRepositoryTests
         Assert.Equal("4/4/2022", chart.CreationDate.ToString());
         Assert.Equal("acacia", chart.Artist.Name);
         Assert.Equal(ChartType.CoOp, chart.Type);
-        Assert.Equal(10598, (int)chart.Id);
+        Assert.Equal(27227, (int)chart.Id);
 
         chart = result[2];
 
@@ -54,7 +54,7 @@ public sealed class AndamiroNewChartsRepositoryTests
         Assert.Equal("4/4/2022", chart.CreationDate.ToString());
         Assert.Equal("LIONRS", chart.Artist.Name);
         Assert.Equal(ChartType.DoublePerformance, chart.Type);
-        Assert.Equal(10597, (int)chart.Id);
+        Assert.Equal(27226, (int)chart.Id);
 
         chart = result[3];
 
@@ -62,7 +62,7 @@ public sealed class AndamiroNewChartsRepositoryTests
         Assert.Equal("4/4/2022", chart.CreationDate.ToString());
         Assert.Equal("GOGENWOO2", chart.Artist.Name);
         Assert.Equal(ChartType.CoOp, chart.Type);
-        Assert.Equal(10596, (int)chart.Id);
+        Assert.Equal(27225, (int)chart.Id);
 
 
         chart = result[4];
@@ -71,7 +71,7 @@ public sealed class AndamiroNewChartsRepositoryTests
         Assert.Equal("4/4/2022", chart.CreationDate.ToString());
         Assert.Equal("GOGENWOO2", chart.Artist.Name);
         Assert.Equal(ChartType.SinglePerformance, chart.Type);
-        Assert.Equal(10595, (int)chart.Id);
+        Assert.Equal(27224, (int)chart.Id);
 
 
         chart = result[5];
@@ -80,7 +80,7 @@ public sealed class AndamiroNewChartsRepositoryTests
         Assert.Equal("4/4/2022", chart.CreationDate.ToString());
         Assert.Equal("GOGENWOO2", chart.Artist.Name);
         Assert.Equal(ChartType.Double, chart.Type);
-        Assert.Equal(10594, (int)chart.Id);
+        Assert.Equal(27223, (int)chart.Id);
 
         chart = result[6];
 
@@ -88,7 +88,7 @@ public sealed class AndamiroNewChartsRepositoryTests
         Assert.Equal("4/4/2022", chart.CreationDate.ToString());
         Assert.Equal("Noriter", chart.Artist.Name);
         Assert.Equal(ChartType.Single, chart.Type);
-        Assert.Equal(10593, (int)chart.Id);
+        Assert.Equal(27222, (int)chart.Id);
 
         chart = result[7];
 
@@ -96,7 +96,7 @@ public sealed class AndamiroNewChartsRepositoryTests
         Assert.Equal("4/4/2022", chart.CreationDate.ToString());
         Assert.Equal("WISEY_", chart.Artist.Name);
         Assert.Equal(ChartType.Double, chart.Type);
-        Assert.Equal(10592, (int)chart.Id);
+        Assert.Equal(27219, (int)chart.Id);
 
         chart = result[8];
 
@@ -104,7 +104,7 @@ public sealed class AndamiroNewChartsRepositoryTests
         Assert.Equal("4/3/2022", chart.CreationDate.ToString());
         Assert.Equal("_AKA_", chart.Artist.Name);
         Assert.Equal(ChartType.Single, chart.Type);
-        Assert.Equal(10591, (int)chart.Id);
+        Assert.Equal(27218, (int)chart.Id);
 
         chart = result[9];
 
@@ -112,7 +112,7 @@ public sealed class AndamiroNewChartsRepositoryTests
         Assert.Equal("4/3/2022", chart.CreationDate.ToString());
         Assert.Equal("_AKA_", chart.Artist.Name);
         Assert.Equal(ChartType.Single, chart.Type);
-        Assert.Equal(10590, (int)chart.Id);
+        Assert.Equal(27217, (int)chart.Id);
 
         chart = result[10];
 
@@ -120,7 +120,7 @@ public sealed class AndamiroNewChartsRepositoryTests
         Assert.Equal("4/3/2022", chart.CreationDate.ToString());
         Assert.Equal("yjhgogoyoyo", chart.Artist.Name);
         Assert.Equal(ChartType.Single, chart.Type);
-        Assert.Equal(10589, (int)chart.Id);
+        Assert.Equal(27216, (int)chart.Id);
 
         chart = result[11];
 
@@ -128,7 +128,7 @@ public sealed class AndamiroNewChartsRepositoryTests
         Assert.Equal("4/3/2022", chart.CreationDate.ToString());
         Assert.Equal("Belics", chart.Artist.Name);
         Assert.Equal(ChartType.Single, chart.Type);
-        Assert.Equal(10588, (int)chart.Id);
+        Assert.Equal(27211, (int)chart.Id);
 
         chart = result[12];
 
@@ -136,7 +136,7 @@ public sealed class AndamiroNewChartsRepositoryTests
         Assert.Equal("4/3/2022", chart.CreationDate.ToString());
         Assert.Equal("SONG_HAON", chart.Artist.Name);
         Assert.Equal(ChartType.Double, chart.Type);
-        Assert.Equal(10587, (int)chart.Id);
+        Assert.Equal(27210, (int)chart.Id);
 
         chart = result[13];
 
@@ -144,7 +144,7 @@ public sealed class AndamiroNewChartsRepositoryTests
         Assert.Equal("4/3/2022", chart.CreationDate.ToString());
         Assert.Equal("SONG_HAON", chart.Artist.Name);
         Assert.Equal(ChartType.Single, chart.Type);
-        Assert.Equal(10586, (int)chart.Id);
+        Assert.Equal(27209, (int)chart.Id);
 
         chart = result[14];
 
@@ -152,7 +152,7 @@ public sealed class AndamiroNewChartsRepositoryTests
         Assert.Equal("4/3/2022", chart.CreationDate.ToString());
         Assert.Equal("nQp1", chart.Artist.Name);
         Assert.Equal(ChartType.Double, chart.Type);
-        Assert.Equal(10585, (int)chart.Id);
+        Assert.Equal(27208, (int)chart.Id);
 
         /* To generate asserts:
 

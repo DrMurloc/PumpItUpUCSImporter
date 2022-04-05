@@ -12,14 +12,17 @@ public sealed class ImportChartsHandler : IRequestHandler<ImportChartsCommand>
     private readonly IExistingChartRepository _existingCharts;
     private readonly IMediator _mediator;
     private readonly INewChartRepository _newCharts;
+    private readonly IChartStepInfoRepository _stepInfoRepository;
 
     public ImportChartsHandler(IExistingChartRepository existingCharts,
         INewChartRepository newCharts,
-        IMediator mediator)
+        IMediator mediator,
+        IChartStepInfoRepository stepInfoRepository)
     {
         _existingCharts = existingCharts;
         _newCharts = newCharts;
         _mediator = mediator;
+        _stepInfoRepository = stepInfoRepository;
     }
 
     public async Task<Unit> Handle(ImportChartsCommand request, CancellationToken cancellationToken)
@@ -43,6 +46,14 @@ public sealed class ImportChartsHandler : IRequestHandler<ImportChartsCommand>
         } while (checkedChartCount < 30);
 
         if (!newCharts.Any()) return Unit.Value;
+
+        var chartInfo =
+            (await _stepInfoRepository.GetStepInfoForCharts(newCharts.Select(c => c.Id), cancellationToken))
+            .ToDictionary(c => c.ChartId);
+
+        foreach (var chart in newCharts.Where(chart => chartInfo.ContainsKey(chart.Id)))
+            chart.ApplyStepInfo(chartInfo[chart.Id]);
+
         await _existingCharts.AddCharts(newCharts, cancellationToken);
         await _mediator.Publish(new ChartsImportedEvent(newCharts), cancellationToken);
         return Unit.Value;
