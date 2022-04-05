@@ -1,22 +1,25 @@
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
 using UCSImporter.Application.Commands;
 
 namespace UCSImporter.AzureFunction;
 
-public sealed class ManualImportEndpoint
+public sealed class ImportFunctions
 {
     private readonly IMediator _mediator;
 
-    public ManualImportEndpoint(IMediator mediator)
+    public ImportFunctions(IMediator mediator)
     {
         _mediator = mediator;
     }
 
+    [FunctionName("DailyImport")]
+    public async Task Run([TimerTrigger("0 30 9 * * *")] TimerInfo myTimer)
+    {
+        await _mediator.Send(new ImportChartsCommand());
+    }
+    /*
     [FunctionName("ManualImport")]
     public async Task<IActionResult> Run(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "Import")]
@@ -27,5 +30,5 @@ public sealed class ManualImportEndpoint
         {
             Message = "Import completed!"
         });
-    }
+    }}}*/
 }
