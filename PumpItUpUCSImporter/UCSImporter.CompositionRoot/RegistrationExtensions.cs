@@ -21,16 +21,12 @@ public static class RegistrationExtensions
     }
 
     public static IServiceCollection AddUCSImporterInfrastructure(this IServiceCollection builder,
-        CosmosConfiguration cosmosConfig, bool useInMemoryNewCharts, DiscordConfiguration discordConfiguration,
+        CosmosConfiguration cosmosConfig, ServiceBusConfiguration serviceBusConfiguration,
         PiuGameConfiguration piuConfiguration)
     {
-        if (discordConfiguration.IsConfigured)
-            builder.AddTransient<IMessageClient, DiscordMessageClient>()
-                .Configure<DiscordConfiguration>(o =>
-                {
-                    o.ChannelIds = discordConfiguration.ChannelIds;
-                    o.BotToken = discordConfiguration.BotToken;
-                });
+        if (serviceBusConfiguration.IsConfigured)
+            builder.AddTransient<IMessageClient, ServiceBusMessageClient>()
+                .Configure<ServiceBusConfiguration>(o => o.ConnectionString = serviceBusConfiguration.ConnectionString);
         else
             builder.AddTransient<IMessageClient, LoggingMessageClient>();
 
@@ -54,7 +50,6 @@ public static class RegistrationExtensions
         }
 
         builder.AddTransient<IExistingChartRepository, CosmosExistingChartsRepository>()
-            .AddTransient<IMessageClient, DiscordMessageClient>()
             .AddTransient<IChartStepInfoRepository, AndamiroChartStepInfoRepository>()
             .AddDbContext<ChartDbContext>(o =>
             {

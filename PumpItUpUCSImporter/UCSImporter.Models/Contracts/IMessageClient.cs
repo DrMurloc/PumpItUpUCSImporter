@@ -1,8 +1,8 @@
-﻿using UCSImporter.Domain.ValueTypes;
+﻿using UCSImporter.Domain.Models;
 
 namespace UCSImporter.Domain.Contracts;
 
 public interface IMessageClient
 {
-    Task SendMessages(IEnumerable<Message> message, CancellationToken cancellationToken = default);
+    Task NotifyChartsImported(IEnumerable<Chart> charts, CancellationToken cancellationToken);
 }

@@ -4,9 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoFixture;
 using FakeItEasy;
-using MediatR;
 using UCSImporter.Application.Commands;
-using UCSImporter.Application.Events;
 using UCSImporter.Application.Handlers;
 using UCSImporter.Domain.Contracts;
 using UCSImporter.Domain.Models;
@@ -29,7 +27,7 @@ public sealed class ImportChartsHandlerTests
         //Set up
         var newChartRepository = A.Fake<INewChartRepository>();
         var existingChartRepository = A.Fake<IExistingChartRepository>();
-        var mediator = A.Fake<IMediator>();
+        var messages = A.Fake<IMessageClient>();
 
         A.CallTo(() => newChartRepository.GetNewCharts(1, A<CancellationToken>.Ignored))
             .Returns(new[] { chart });
@@ -37,14 +35,14 @@ public sealed class ImportChartsHandlerTests
         A.CallTo(() => existingChartRepository.GetCharts(A<IEnumerable<ChartId>>.Ignored, A<CancellationToken>.Ignored))
             .Returns(new[] { chart });
 
-        var handler = new ImportChartsHandler(existingChartRepository, newChartRepository, mediator,
-            A.Fake<IChartStepInfoRepository>());
+        var handler = new ImportChartsHandler(existingChartRepository, newChartRepository,
+            A.Fake<IChartStepInfoRepository>(), messages);
 
         //Test
         await handler.Handle(new ImportChartsCommand(), CancellationToken.None);
 
         //Assert
-        A.CallTo(() => mediator.Publish(A<ChartsImportedEvent>.Ignored,
+        A.CallTo(() => messages.NotifyChartsImported(A<IEnumerable<Chart>>.Ignored,
                 A<CancellationToken>.Ignored))
             .MustNotHaveHappened();
 
@@ -64,7 +62,7 @@ public sealed class ImportChartsHandlerTests
         //Set up
         var newChartRepository = A.Fake<INewChartRepository>();
         var existingChartRepository = A.Fake<IExistingChartRepository>();
-        var mediator = A.Fake<IMediator>();
+        var messages = A.Fake<IMessageClient>();
 
         A.CallTo(() => newChartRepository.GetNewCharts(1, A<CancellationToken>.Ignored))
             .Returns(new[] { firstPageChart });
@@ -72,16 +70,16 @@ public sealed class ImportChartsHandlerTests
         A.CallTo(() => newChartRepository.GetNewCharts(2, A<CancellationToken>.Ignored))
             .Returns(new[] { secondPageChart });
 
-        var handler = new ImportChartsHandler(existingChartRepository, newChartRepository, mediator,
-            A.Fake<IChartStepInfoRepository>());
+        var handler = new ImportChartsHandler(existingChartRepository, newChartRepository,
+            A.Fake<IChartStepInfoRepository>(), messages);
 
         //Test
         await handler.Handle(new ImportChartsCommand(), CancellationToken.None);
 
         //Assert
-        A.CallTo(() => mediator.Publish(
-                A<ChartsImportedEvent>.That.Matches(e =>
-                    e.Charts.Count() == 2 && e.Charts.Contains(firstPageChart) && e.Charts.Contains(secondPageChart)),
+        A.CallTo(() => messages.NotifyChartsImported(
+                A<IEnumerable<Chart>>.That.Matches(e =>
+                    e.Count() == 2 && e.Contains(firstPageChart) && e.Contains(secondPageChart)),
                 A<CancellationToken>.Ignored))
             .MustHaveHappenedOnceExactly();
 
@@ -103,7 +101,7 @@ public sealed class ImportChartsHandlerTests
         //Set up
         var newChartRepository = A.Fake<INewChartRepository>();
         var existingChartRepository = A.Fake<IExistingChartRepository>();
-        var mediator = A.Fake<IMediator>();
+        var messages = A.Fake<IMessageClient>();
 
         A.CallTo(() => newChartRepository.GetNewCharts(1, A<CancellationToken>.Ignored))
             .Returns(new[] { chart, olderChart });
@@ -113,14 +111,14 @@ public sealed class ImportChartsHandlerTests
                     A<CancellationToken>.Ignored))
             .Returns(new[] { olderChart });
 
-        var handler = new ImportChartsHandler(existingChartRepository, newChartRepository, mediator,
-            A.Fake<IChartStepInfoRepository>());
+        var handler = new ImportChartsHandler(existingChartRepository, newChartRepository,
+            A.Fake<IChartStepInfoRepository>(), messages);
 
         //Test
         await handler.Handle(new ImportChartsCommand(), CancellationToken.None);
 
         //Assert
-        A.CallTo(() => mediator.Publish(A<ChartsImportedEvent>.That.Matches(e => e.Charts.Single().Equals(chart)),
+        A.CallTo(() => messages.NotifyChartsImported(A<IEnumerable<Chart>>.That.Matches(e => e.Single().Equals(chart)),
                 A<CancellationToken>.Ignored))
             .MustHaveHappenedOnceExactly();
 
@@ -139,19 +137,19 @@ public sealed class ImportChartsHandlerTests
         //Set up
         var newChartRepository = A.Fake<INewChartRepository>();
         var existingChartRepository = A.Fake<IExistingChartRepository>();
-        var mediator = A.Fake<IMediator>();
+        var messages = A.Fake<IMessageClient>();
 
         A.CallTo(() => newChartRepository.GetNewCharts(1, A<CancellationToken>.Ignored))
             .Returns(new[] { chart });
 
-        var handler = new ImportChartsHandler(existingChartRepository, newChartRepository, mediator,
-            A.Fake<IChartStepInfoRepository>());
+        var handler = new ImportChartsHandler(existingChartRepository, newChartRepository,
+            A.Fake<IChartStepInfoRepository>(), messages);
 
         //Test
         await handler.Handle(new ImportChartsCommand(), CancellationToken.None);
 
         //Assert
-        A.CallTo(() => mediator.Publish(A<ChartsImportedEvent>.That.Matches(e => e.Charts.Single().Equals(chart)),
+        A.CallTo(() => messages.NotifyChartsImported(A<IEnumerable<Chart>>.That.Matches(e => e.Single().Equals(chart)),
                 A<CancellationToken>.Ignored))
             .MustHaveHappenedOnceExactly();
 
@@ -170,19 +168,19 @@ public sealed class ImportChartsHandlerTests
         //Set up
         var newChartRepository = A.Fake<INewChartRepository>();
         var existingChartRepository = A.Fake<IExistingChartRepository>();
-        var mediator = A.Fake<IMediator>();
+        var messages = A.Fake<IMessageClient>();
 
         A.CallTo(() => newChartRepository.GetNewCharts(A<int>.Ignored, A<CancellationToken>.Ignored))
             .Returns(new[] { chart });
 
-        var handler = new ImportChartsHandler(existingChartRepository, newChartRepository, mediator,
-            A.Fake<IChartStepInfoRepository>());
+        var handler = new ImportChartsHandler(existingChartRepository, newChartRepository,
+            A.Fake<IChartStepInfoRepository>(), messages);
 
         //Test
         await handler.Handle(new ImportChartsCommand(), CancellationToken.None);
 
         //Assert
-        A.CallTo(() => mediator.Publish(A<ChartsImportedEvent>.That.Matches(e => e.Charts.Count() == 30),
+        A.CallTo(() => messages.NotifyChartsImported(A<IEnumerable<Chart>>.That.Matches(e => e.Count() == 30),
                 A<CancellationToken>.Ignored))
             .MustHaveHappenedOnceExactly();
 

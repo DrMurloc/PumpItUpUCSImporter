@@ -1,7 +1,6 @@
 ﻿using System.Collections.Immutable;
 using MediatR;
 using UCSImporter.Application.Commands;
-using UCSImporter.Application.Events;
 using UCSImporter.Domain.Contracts;
 using UCSImporter.Domain.Models;
 
@@ -10,19 +9,19 @@ namespace UCSImporter.Application.Handlers;
 public sealed class ImportChartsHandler : IRequestHandler<ImportChartsCommand>
 {
     private readonly IExistingChartRepository _existingCharts;
-    private readonly IMediator _mediator;
+    private readonly IMessageClient _messageClient;
     private readonly INewChartRepository _newCharts;
     private readonly IChartStepInfoRepository _stepInfoRepository;
 
     public ImportChartsHandler(IExistingChartRepository existingCharts,
         INewChartRepository newCharts,
-        IMediator mediator,
-        IChartStepInfoRepository stepInfoRepository)
+        IChartStepInfoRepository stepInfoRepository,
+        IMessageClient messageClient)
     {
         _existingCharts = existingCharts;
         _newCharts = newCharts;
-        _mediator = mediator;
         _stepInfoRepository = stepInfoRepository;
+        _messageClient = messageClient;
     }
 
     public async Task<Unit> Handle(ImportChartsCommand request, CancellationToken cancellationToken)
@@ -55,7 +54,7 @@ public sealed class ImportChartsHandler : IRequestHandler<ImportChartsCommand>
             chart.ApplyStepInfo(chartInfo[chart.Id]);
 
         await _existingCharts.AddCharts(newCharts, cancellationToken);
-        await _mediator.Publish(new ChartsImportedEvent(newCharts), cancellationToken);
+        await _messageClient.NotifyChartsImported(newCharts, cancellationToken);
         return Unit.Value;
     }
 }
