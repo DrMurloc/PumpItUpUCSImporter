@@ -15,7 +15,9 @@ public sealed class AndamiroNewChartRepository : INewChartRepository
     private static readonly Regex ChartLineRegex =
         new(@"<tr>.*?<\/tr>", RegexOptions.Compiled | RegexOptions.Singleline);
 
-    private static readonly Regex ChartIdRegex = new(@"<td class=""share_no"">.*?([0-9]+).*?<\/td>",
+
+    private static readonly Regex ChartIdRegex = new(
+        @"wr_id=([0-9]+)",
         RegexOptions.Compiled | RegexOptions.Singleline);
 
     private static readonly Regex SongNameRegex = new(

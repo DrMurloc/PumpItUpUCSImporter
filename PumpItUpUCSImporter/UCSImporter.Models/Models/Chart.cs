@@ -16,6 +16,7 @@ public sealed class Chart : IEquatable<Chart>
         CreationDate = creationDate;
     }
 
+    public ChartStepInfo? StepInfo { get; private set; }
     public ChartId Id { get; }
     public Song Song { get; }
     public ChartType Type { get; }
@@ -26,6 +27,12 @@ public sealed class Chart : IEquatable<Chart>
     public bool Equals(Chart? other)
     {
         return other is not null && Id.Equals(other.Id);
+    }
+
+    public void ApplyStepInfo(ChartStepInfo stepInfo)
+    {
+        if (StepInfo != null) throw new Exception($"Step Info already set for chart {Id}");
+        StepInfo = stepInfo;
     }
 
     public override bool Equals(object? obj)

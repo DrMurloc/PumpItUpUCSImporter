@@ -18,6 +18,7 @@ public sealed class NotifyOnChartImportListenerTests
 {
     private readonly Fixture _fixture = FixtureBuilder.Build();
 
+
     [Fact]
     public async Task ChartToMessageMappingTest()
     {

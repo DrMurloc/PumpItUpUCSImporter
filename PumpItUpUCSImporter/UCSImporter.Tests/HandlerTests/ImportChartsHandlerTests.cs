@@ -37,7 +37,8 @@ public sealed class ImportChartsHandlerTests
         A.CallTo(() => existingChartRepository.GetCharts(A<IEnumerable<ChartId>>.Ignored, A<CancellationToken>.Ignored))
             .Returns(new[] { chart });
 
-        var handler = new ImportChartsHandler(existingChartRepository, newChartRepository, mediator);
+        var handler = new ImportChartsHandler(existingChartRepository, newChartRepository, mediator,
+            A.Fake<IChartStepInfoRepository>());
 
         //Test
         await handler.Handle(new ImportChartsCommand(), CancellationToken.None);
@@ -71,7 +72,8 @@ public sealed class ImportChartsHandlerTests
         A.CallTo(() => newChartRepository.GetNewCharts(2, A<CancellationToken>.Ignored))
             .Returns(new[] { secondPageChart });
 
-        var handler = new ImportChartsHandler(existingChartRepository, newChartRepository, mediator);
+        var handler = new ImportChartsHandler(existingChartRepository, newChartRepository, mediator,
+            A.Fake<IChartStepInfoRepository>());
 
         //Test
         await handler.Handle(new ImportChartsCommand(), CancellationToken.None);
@@ -111,7 +113,8 @@ public sealed class ImportChartsHandlerTests
                     A<CancellationToken>.Ignored))
             .Returns(new[] { olderChart });
 
-        var handler = new ImportChartsHandler(existingChartRepository, newChartRepository, mediator);
+        var handler = new ImportChartsHandler(existingChartRepository, newChartRepository, mediator,
+            A.Fake<IChartStepInfoRepository>());
 
         //Test
         await handler.Handle(new ImportChartsCommand(), CancellationToken.None);
@@ -141,7 +144,8 @@ public sealed class ImportChartsHandlerTests
         A.CallTo(() => newChartRepository.GetNewCharts(1, A<CancellationToken>.Ignored))
             .Returns(new[] { chart });
 
-        var handler = new ImportChartsHandler(existingChartRepository, newChartRepository, mediator);
+        var handler = new ImportChartsHandler(existingChartRepository, newChartRepository, mediator,
+            A.Fake<IChartStepInfoRepository>());
 
         //Test
         await handler.Handle(new ImportChartsCommand(), CancellationToken.None);
@@ -171,7 +175,8 @@ public sealed class ImportChartsHandlerTests
         A.CallTo(() => newChartRepository.GetNewCharts(A<int>.Ignored, A<CancellationToken>.Ignored))
             .Returns(new[] { chart });
 
-        var handler = new ImportChartsHandler(existingChartRepository, newChartRepository, mediator);
+        var handler = new ImportChartsHandler(existingChartRepository, newChartRepository, mediator,
+            A.Fake<IChartStepInfoRepository>());
 
         //Test
         await handler.Handle(new ImportChartsCommand(), CancellationToken.None);
