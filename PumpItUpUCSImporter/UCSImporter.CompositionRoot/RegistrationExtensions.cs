@@ -21,7 +21,8 @@ public static class RegistrationExtensions
     }
 
     public static IServiceCollection AddUCSImporterInfrastructure(this IServiceCollection builder,
-        CosmosConfiguration cosmosConfig, bool useInMemoryNewCharts, DiscordConfiguration discordConfiguration)
+        CosmosConfiguration cosmosConfig, bool useInMemoryNewCharts, DiscordConfiguration discordConfiguration,
+        PiuGameConfiguration piuConfiguration)
     {
         if (discordConfiguration.IsConfigured)
             builder.AddTransient<IMessageClient, DiscordMessageClient>()
@@ -33,14 +34,23 @@ public static class RegistrationExtensions
         else
             builder.AddTransient<IMessageClient, LoggingMessageClient>();
 
-        if (useInMemoryNewCharts)
-            builder.AddTransient<INewChartRepository, InMemoryNewChartRepository>();
+
+        if (piuConfiguration.IsConfigured)
+            builder
+                .AddTransient<IChartStepInfoRepository, AndamiroChartStepInfoRepository>()
+                .AddTransient<INewChartRepository, AndamiroNewChartRepository>()
+                .AddSingleton<IPiuGameSiteApi, PiuGameSiteApi>()
+                .Configure<PiuGameConfiguration>(o =>
+                {
+                    o.Email = piuConfiguration.Email;
+                    o.Password = piuConfiguration.Password;
+                });
         else
-            builder.AddTransient<INewChartRepository, AndamiroNewChartRepository>();
+            builder.AddTransient<INewChartRepository, InMemoryNewChartRepository>();
 
         builder.AddTransient<IExistingChartRepository, CosmosExistingChartsRepository>()
             .AddTransient<IMessageClient, DiscordMessageClient>()
-            .AddTransient<IPiuGameSiteApi, PiuGameSiteApi>()
+            .AddTransient<IChartStepInfoRepository, AndamiroChartStepInfoRepository>()
             .AddDbContext<ChartDbContext>(o =>
             {
                 if (!cosmosConfig.IsConfigured)

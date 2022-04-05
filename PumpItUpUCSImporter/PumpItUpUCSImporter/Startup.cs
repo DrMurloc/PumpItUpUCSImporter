@@ -26,7 +26,7 @@ public sealed class Startup : FunctionsStartup
         var config = builder.Services.BuildServiceProvider().GetRequiredService<IConfiguration>();
         var cosmosConfig = config.GetSection("Cosmos")?.Get<CosmosConfiguration>() ?? new CosmosConfiguration();
         var discordSection = config.GetSection("Discord");
-
+        var piuConfig = config.GetSection("PiuGame")?.Get<PiuGameConfiguration>() ?? new PiuGameConfiguration();
         var discordConfig = new DiscordConfiguration
         {
             BotToken = discordSection?["BotToken"] ?? string.Empty,
@@ -37,6 +37,7 @@ public sealed class Startup : FunctionsStartup
         };
         builder.Services
             .AddUCSImporterCore()
-            .AddUCSImporterInfrastructure(cosmosConfig, config.GetValue<bool>("UseInMemoryNewCharts"), discordConfig);
+            .AddUCSImporterInfrastructure(cosmosConfig, config.GetValue<bool>("UseInMemoryNewCharts"), discordConfig,
+                piuConfig);
     }
 }
