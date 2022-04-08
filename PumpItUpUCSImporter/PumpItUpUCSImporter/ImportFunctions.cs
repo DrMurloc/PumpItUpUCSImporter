@@ -2,24 +2,20 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Azure.WebJobs;
 using UCSImporter.Application.Commands;
-using UCSImporter.Domain.Contracts;
 
 namespace UCSImporter.AzureFunction;
 
 public sealed class ImportFunctions
 {
     private readonly IMediator _mediator;
-    private readonly IMessageClient _messageClient;
 
-    public ImportFunctions(IMediator mediator,
-        IMessageClient messageClient)
+    public ImportFunctions(IMediator mediator)
     {
         _mediator = mediator;
-        _messageClient = messageClient;
     }
 
     [FunctionName("DailyImport")]
-    public async Task Run([TimerTrigger("0 30 9 * * *")] TimerInfo myTimer)
+    public async Task Run([TimerTrigger("0 0 * * * *")] TimerInfo myTimer)
     {
         await _mediator.Send(new ImportChartsCommand());
     }
