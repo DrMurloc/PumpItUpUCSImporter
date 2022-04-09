@@ -39,7 +39,7 @@ public sealed class ServiceBusMessageClient : IMessageClient
         var message = JsonConvert.SerializeObject(dtos);
 
         var client = new ServiceBusClient(_configuration.ConnectionString);
-        var sender = client.CreateSender("ucs-imported");
+        var sender = client.CreateSender(_configuration.QueueName);
         await sender.SendMessageAsync(new ServiceBusMessage(message), cancellationToken);
     }
 }
