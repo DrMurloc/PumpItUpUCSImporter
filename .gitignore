@@ -299,3 +299,6 @@ PumpItUpUCSImporter/PumpItUpUCSImporter/Properties/PublishProfiles/piu-ucs-impor
 PumpItUpUCSImporter/PumpItUpUCSImporter/Properties/serviceDependencies.piu-ucs-importer - Zip Deploy.json
 
 PumpItUpUCSImporter/PumpItUpUCSImporter/Properties/ServiceDependencies/piu-ucs-importer - Zip Deploy/
+
+PumpItUpUCSImporter/PumpItUpUCSImporter/Properties/serviceDependencies.piu-ucs-importer - Zip Deploy.json
+
