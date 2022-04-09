@@ -1,4 +1,4 @@
-﻿namespace UCSImporter.Domain.Enums;
+﻿namespace UCSImporter.Domain.ChartParser.Enums;
 
 public enum ArrowState
 {

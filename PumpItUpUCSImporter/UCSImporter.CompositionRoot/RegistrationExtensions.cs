@@ -26,7 +26,11 @@ public static class RegistrationExtensions
     {
         if (serviceBusConfiguration.IsConfigured)
             builder.AddTransient<IMessageClient, ServiceBusMessageClient>()
-                .Configure<ServiceBusConfiguration>(o => o.ConnectionString = serviceBusConfiguration.ConnectionString);
+                .Configure<ServiceBusConfiguration>(o =>
+                {
+                    o.QueueName = serviceBusConfiguration.QueueName;
+                    o.ConnectionString = serviceBusConfiguration.ConnectionString;
+                });
         else
             builder.AddTransient<IMessageClient, LoggingMessageClient>();
 

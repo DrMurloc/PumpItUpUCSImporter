@@ -23,7 +23,7 @@ public sealed class ServiceBusMessageClient : IMessageClient
         {
             ChartId = c.Id,
             ChartType = c.Type.ToString(),
-            CreationDate = c.CreationDate,
+            CreationDate = c.CreationDate.ToDateTime(TimeOnly.MinValue),
             DifficultyLevel = c.Level,
             HoldCount = c.StepInfo?.HoldCount ?? 0,
             JumpCount = c.StepInfo?.JumpCount ?? 0,
@@ -34,12 +34,14 @@ public sealed class ServiceBusMessageClient : IMessageClient
             SpeedChangeCount = c.StepInfo?.SpeedChangeCount ?? 0,
             StepArtistName = c.Artist.Name,
             StepCount = c.StepInfo?.StepCount ?? 0,
-            TripleCount = c.StepInfo?.TripleCount ?? 0
+            TripleCount = c.StepInfo?.TripleCount ?? 0,
+            IsHalfDouble = c.StepInfo?.IsHalfDouble ?? false,
+            IsQuarterDouble = c.StepInfo?.IsQuarterDouble ?? false
         });
         var message = JsonConvert.SerializeObject(dtos);
 
         var client = new ServiceBusClient(_configuration.ConnectionString);
-        var sender = client.CreateSender("ucs-imported");
+        var sender = client.CreateSender(_configuration.QueueName);
         await sender.SendMessageAsync(new ServiceBusMessage(message), cancellationToken);
     }
 }

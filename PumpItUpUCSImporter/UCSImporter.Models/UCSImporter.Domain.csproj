@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\UCSImporter.Domain.ChartParser\UCSImporter.Domain.ChartParser.csproj" />
+  </ItemGroup>
+
 </Project>
