@@ -1,4 +1,4 @@
-﻿using UCSImporter.Domain.Models;
+﻿using UCSImporter.Domain.ChartParser.Models;
 using UCSImporter.Domain.ValueTypes;
 
 namespace UCSImporter.Domain.Contracts;

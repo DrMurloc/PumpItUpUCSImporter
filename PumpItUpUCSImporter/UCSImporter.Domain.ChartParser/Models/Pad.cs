@@ -1,6 +1,6 @@
-﻿using UCSImporter.Domain.Enums;
+﻿using UCSImporter.Domain.ChartParser.Enums;
 
-namespace UCSImporter.Domain.Models;
+namespace UCSImporter.Domain.ChartParser.Models;
 
 public sealed class Pad
 {

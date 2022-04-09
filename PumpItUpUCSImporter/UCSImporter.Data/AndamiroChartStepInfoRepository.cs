@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using UCSImporter.Data.Apis.Contracts;
+using UCSImporter.Domain.ChartParser.Enums;
+using UCSImporter.Domain.ChartParser.Models;
 using UCSImporter.Domain.Contracts;
-using UCSImporter.Domain.Enums;
-using UCSImporter.Domain.Models;
 using UCSImporter.Domain.ValueTypes;
 
 namespace UCSImporter.Data;

@@ -1,19 +1,18 @@
 ﻿using System.Collections.Immutable;
-using UCSImporter.Domain.ValueTypes;
 
-namespace UCSImporter.Domain.Models;
+namespace UCSImporter.Domain.ChartParser.Models;
 
 public sealed class ChartStepInfo
 {
     private readonly ImmutableArray<ChartRow> _rows;
 
-    public ChartStepInfo(ChartId chartId, IEnumerable<ChartRow> rows)
+    public ChartStepInfo(int chartId, IEnumerable<ChartRow> rows)
     {
         ChartId = chartId;
         _rows = rows.ToImmutableArray();
     }
 
-    public ChartId ChartId { get; }
+    public int ChartId { get; }
     public int StepCount => _rows.Count(r => r.HasStep);
     public int HoldCount => _rows.Count(r => r.HasHold);
     public int JumpCount => _rows.Count(r => r.PressedAtOnce == 2);

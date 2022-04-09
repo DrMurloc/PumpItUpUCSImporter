@@ -13,15 +13,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{34D6DCE2-C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UCSImporter.Domain", "UCSImporter.Models\UCSImporter.Domain.csproj", "{738235E9-6006-4AD5-BFB2-44D3FF710180}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UCSImporter.Application", "UCSImporter.Application\UCSImporter.Application.csproj", "{68973ED1-16AC-4D85-AA65-3D1364D04FCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UCSImporter.Application", "UCSImporter.Application\UCSImporter.Application.csproj", "{68973ED1-16AC-4D85-AA65-3D1364D04FCA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{12246472-C8AA-4D28-8A9D-95738B0F4585}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UCSImporter.Tests", "UCSImporter.Tests\UCSImporter.Tests.csproj", "{905503AD-C1DB-49A8-AEB2-6E54590F2E83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UCSImporter.Tests", "UCSImporter.Tests\UCSImporter.Tests.csproj", "{905503AD-C1DB-49A8-AEB2-6E54590F2E83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UCSImporter.CompositionRoot", "UCSImporter.CompositionRoot\UCSImporter.CompositionRoot.csproj", "{AF497D19-93C5-425B-88FA-0EF538064A2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UCSImporter.CompositionRoot", "UCSImporter.CompositionRoot\UCSImporter.CompositionRoot.csproj", "{AF497D19-93C5-425B-88FA-0EF538064A2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UCSImporter.Data", "UCSImporter.Data\UCSImporter.Data.csproj", "{D8FAD6D8-BE11-41BA-ADB2-C33CCF8396F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UCSImporter.Data", "UCSImporter.Data\UCSImporter.Data.csproj", "{D8FAD6D8-BE11-41BA-ADB2-C33CCF8396F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UCSImporter.Domain.ChartParser", "UCSImporter.Domain.ChartParser\UCSImporter.Domain.ChartParser.csproj", "{BE225324-BD30-47B4-BB09-9916D27142A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{D8FAD6D8-BE11-41BA-ADB2-C33CCF8396F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8FAD6D8-BE11-41BA-ADB2-C33CCF8396F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8FAD6D8-BE11-41BA-ADB2-C33CCF8396F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE225324-BD30-47B4-BB09-9916D27142A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE225324-BD30-47B4-BB09-9916D27142A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE225324-BD30-47B4-BB09-9916D27142A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE225324-BD30-47B4-BB09-9916D27142A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +70,7 @@ Global
 		{905503AD-C1DB-49A8-AEB2-6E54590F2E83} = {12246472-C8AA-4D28-8A9D-95738B0F4585}
 		{AF497D19-93C5-425B-88FA-0EF538064A2A} = {FD1711B1-6E23-4D50-B8CF-649BBBECACF8}
 		{D8FAD6D8-BE11-41BA-ADB2-C33CCF8396F7} = {D56B5572-1828-438A-A82F-19E1ED800575}
+		{BE225324-BD30-47B4-BB09-9916D27142A6} = {34D6DCE2-C23E-4108-BED0-CAF3C2CD121A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {479A9842-FAB6-4B6E-8408-74145A8A65C3}

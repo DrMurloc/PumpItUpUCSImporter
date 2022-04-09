@@ -1,4 +1,4 @@
-﻿namespace UCSImporter.Domain.Models;
+﻿namespace UCSImporter.Domain.ChartParser.Models;
 
 public sealed class ChartRow
 {

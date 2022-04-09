@@ -1,4 +1,5 @@
-﻿using UCSImporter.Domain.Enums;
+﻿using UCSImporter.Domain.ChartParser.Models;
+using UCSImporter.Domain.Enums;
 using UCSImporter.Domain.ValueTypes;
 
 namespace UCSImporter.Domain.Models;
