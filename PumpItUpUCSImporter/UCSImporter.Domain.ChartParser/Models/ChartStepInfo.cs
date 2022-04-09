@@ -10,15 +10,35 @@ public sealed class ChartStepInfo
     {
         ChartId = chartId;
         _rows = rows.ToImmutableArray();
+        foreach (var chartRow in _rows) ProcessRow(chartRow);
     }
 
     public int ChartId { get; }
-    public int StepCount => _rows.Count(r => r.HasStep);
-    public int HoldCount => _rows.Count(r => r.HasHold);
-    public int JumpCount => _rows.Count(r => r.PressedAtOnce == 2);
-    public int TripleCount => _rows.Count(r => r.PressedAtOnce == 3);
-    public int QuadCount => _rows.Count(r => r.PressedAtOnce == 4);
-    public int QuintPlusCount => _rows.Count(r => r.PressedAtOnce >= 5);
-    public int SpeedChangeCount => _rows.Count(r => r.IsSpeedChange);
-    public double LargestSpeedChange => _rows.Max(r => r.SpeedChange);
+    public int StepCount { get; private set; }
+    public int HoldCount { get; private set; }
+    public int JumpCount { get; private set; }
+    public int TripleCount { get; private set; }
+    public int QuadCount { get; private set; }
+    public int QuintPlusCount { get; private set; }
+    public int SpeedChangeCount { get; private set; }
+    public double LargestSpeedChange { get; private set; }
+
+    private void ProcessRow(ChartRow row)
+    {
+        if (row.HasStep) StepCount++;
+
+        if (row.HasHold) HoldCount++;
+
+        if (row.PressedAtOnce == 2) JumpCount++;
+
+        if (row.PressedAtOnce == 3) TripleCount++;
+
+        if (row.PressedAtOnce == 4) QuadCount++;
+
+        if (row.PressedAtOnce >= 5) QuintPlusCount++;
+
+        if (row.IsSpeedChange) SpeedChangeCount++;
+
+        if (row.SpeedChange > LargestSpeedChange) LargestSpeedChange = row.SpeedChange;
+    }
 }
