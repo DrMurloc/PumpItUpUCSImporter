@@ -22,7 +22,7 @@ public static class ChartParser
         var errors = new List<RowParseError>();
         var chartState = new ChartState(0, 0, 0, 0);
 
-        foreach (var rowString in chart.Replace("\r", "").Split("\n"))
+        foreach (var rowString in chart.Replace("\r", "").Split("\n").Where(s => !string.IsNullOrWhiteSpace(s)))
             try
             {
                 if (rowString.StartsWith(":Format", StringComparison.OrdinalIgnoreCase)

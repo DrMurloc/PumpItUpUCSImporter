@@ -22,6 +22,8 @@ public sealed class ChartStepInfo
     public int QuintPlusCount { get; private set; }
     public int SpeedChangeCount { get; private set; }
     public double LargestSpeedChange { get; private set; }
+    public bool IsHalfDouble { get; private set; } = true;
+    public bool IsQuarterDouble { get; private set; } = true;
 
     private void ProcessRow(ChartRow row)
     {
@@ -40,5 +42,9 @@ public sealed class ChartStepInfo
         if (row.IsSpeedChange) SpeedChangeCount++;
 
         if (row.SpeedChange > LargestSpeedChange) LargestSpeedChange = row.SpeedChange;
+
+        if (!row.IsHalfDouble) IsHalfDouble = false;
+
+        if (!row.IsQuarterDouble) IsQuarterDouble = false;
     }
 }
